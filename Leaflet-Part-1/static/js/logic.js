@@ -76,7 +76,7 @@ function createMap(earthquakeLocations) { // Need to add legend somewhere in her
 
     var map = L.map("map", {
         // what coordinates do I need to center the map? Center of the world???
-        center: [37.09, -95.71], 
+        center: [41, 35], // https://en.wikipedia.org/wiki/Geographical_centre_of_Earth, referenced for coordinates for center of the Earth 
         zoom: 5,
         layers: [streetmap, earthquakeLocations]
     });
