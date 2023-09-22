@@ -9,19 +9,23 @@ function createMarkers(earthquakeData) {
     console.log(earthquakeData);
 
     // var earthquaks = earthquakeData;
-    var earthquakeMarkers = [];
+    var earthquakeMarkerArray = [];
 
     for (i = 0; i < earthquakeData.length; i++) {
-        let earthquake = earthquakeData[i].geometry.coordinates;
+        var earthquake = earthquakeData[i].geometry.coordinates;
+        var earthquakeMarker = L.marker([earthquake[0], earthquake[1]]).bindPopup("<h3>I'm an earthquake</h3>");
         console.log(earthquake);
+        earthquakeMarkerArray.push(earthquakeMarker);
     }
 
-    createMap();
+    console.log(earthquakeMarkerArray);
+
+    createMap(L.layerGroup(earthquakeMarkerArray));
 };
 
 //function to create markers for data.features.geometry.coordinates
 
-function createMap() {
+function createMap(earthquakeLocations) {
     //function to create map tile layer
 
 
@@ -42,7 +46,7 @@ function createMap() {
         // what coordinates do I need to center the map? Center of the world???
         center: [37.09, -95.71], 
         zoom: 5,
-        layers: [streetmap]
+        layers: [streetmap, earthquakeLocations]
     });
 
 };
