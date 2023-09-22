@@ -19,6 +19,21 @@ function createMarkers(earthquakeData) {
         var lat = earthquakeData[i].geometry.coordinates[1];
         var depth = earthquakeData[i].geometry.coordinates[2];
 
+        var color = "";
+
+        if (depth < 10) {
+            color = "green";
+        } else if (depth < 30) {
+            color = "lightgreen";
+        } else if (depth < 50) {
+            color = "yellow";
+        } else if (depth < 70) {
+            color = "orange";
+        } else if (depth < 90) {
+            color = "lightred";
+        } else {
+            color = "red";
+        }
         //console.log(magnitude);
 
         // var earthquake = earthquakeData[i].geometry.coordinates;
@@ -27,11 +42,11 @@ function createMarkers(earthquakeData) {
         // earthquakeMarkerArray.push(earthquakeMarker);
 
         var earthquakeMarker = L.circle([lng, lat], {
-            color: depth,
-            fillColor: mag,
-            opacity: 0.5,
-            radius: (mag * 100000) //may need to be an absolute value
-        }); // need to add popup
+            color: color,
+            fillColor: color,
+            opacity: 0.75,
+            radius: Math.pow(mag, 7) //may need to be an absolute value
+        }).bindPopup(`<h3>Magnitude: ${mag} Depth: ${depth} km</h3>`); 
         earthquakeMarkerArray.push(earthquakeMarker);
     }
 
@@ -42,7 +57,7 @@ function createMarkers(earthquakeData) {
 
 //function to create markers for data.features.geometry.coordinates
 
-function createMap(earthquakeLocations) {
+function createMap(earthquakeLocations) { // Need to add legend somewhere in here
     //function to create map tile layer
 
 
