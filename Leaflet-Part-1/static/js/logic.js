@@ -1,4 +1,5 @@
-var queryURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"; // All earthquakes in the past day
+//var queryURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"; // All earthquakes in the past day
+var queryURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 d3.json(queryURL).then(function(data) {
     createMarkers(data.features);
@@ -12,9 +13,25 @@ function createMarkers(earthquakeData) {
     var earthquakeMarkerArray = [];
 
     for (i = 0; i < earthquakeData.length; i++) {
-        var earthquake = earthquakeData[i].geometry.coordinates;
-        var earthquakeMarker = L.marker([earthquake[0], earthquake[1]]).bindPopup("<h3>I'm an earthquake</h3>");
-        console.log(earthquake);
+
+        var mag = earthquakeData[i].properties.mag;
+        var lng = earthquakeData[i].geometry.coordinates[0];
+        var lat = earthquakeData[i].geometry.coordinates[1];
+        var depth = earthquakeData[i].geometry.coordinates[2];
+
+        //console.log(magnitude);
+
+        // var earthquake = earthquakeData[i].geometry.coordinates;
+        // var earthquakeMarker = L.marker([earthquake[0], earthquake[1]]).bindPopup("<h3>I'm an earthquake</h3>");
+        // console.log(earthquake);
+        // earthquakeMarkerArray.push(earthquakeMarker);
+
+        var earthquakeMarker = L.circle([lng, lat], {
+            color: depth,
+            fillColor: mag,
+            opacity: 0.5,
+            radius: (mag * 100000) //may need to be an absolute value
+        }); // need to add popup
         earthquakeMarkerArray.push(earthquakeMarker);
     }
 
