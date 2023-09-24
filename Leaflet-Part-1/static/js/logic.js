@@ -1,7 +1,8 @@
 //var queryURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"; // All earthquakes in the past day
-var queryURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+var queryURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"; // All earthquakes in the past month
 
 d3.json(queryURL).then(function(data) {
+    console.log(data);
     createMarkers(data.features);
 })
 
@@ -34,12 +35,6 @@ function createMarkers(earthquakeData) {
         } else {
             color = "red";
         }
-        //console.log(magnitude);
-
-        // var earthquake = earthquakeData[i].geometry.coordinates;
-        // var earthquakeMarker = L.marker([earthquake[0], earthquake[1]]).bindPopup("<h3>I'm an earthquake</h3>");
-        // console.log(earthquake);
-        // earthquakeMarkerArray.push(earthquakeMarker);
 
         var earthquakeMarker = L.circle([lng, lat], {
             color: color,
@@ -47,7 +42,7 @@ function createMarkers(earthquakeData) {
             opacity: 0.75,
             radius: Math.pow(mag, 7) //may need to be an absolute value
         }).bindPopup(`<h3>Magnitude: ${mag} Depth: ${depth} km</h3>`); 
-        earthquakeMarkerArray.push(earthquakeMarker);
+        earthquakeMarkerArray.push(earthquakeMarker);// need to add earthquake location
     }
 
     console.log(earthquakeMarkerArray);
@@ -58,27 +53,35 @@ function createMarkers(earthquakeData) {
 //function to create markers for data.features.geometry.coordinates
 
 function createMap(earthquakeLocations) { // Need to add legend somewhere in here
-    //function to create map tile layer
-
-
 
     var streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
 
-    // var baseMap = {
-    //     //function to create base map, this function is used for selecting map layers, may not need
-    // };
-
-    // var overlayMap = { // function to toggle overlay map on or off, may not need
-
-    // };
-
     var map = L.map("map", {
-        // what coordinates do I need to center the map? Center of the world???
+
         center: [41, 35], // https://en.wikipedia.org/wiki/Geographical_centre_of_Earth, referenced for coordinates for center of the Earth 
         zoom: 5,
         layers: [streetmap, earthquakeLocations]
     });
+
+    var legend = L.control({position: "bottomright"});
+    legend.onAdd = function(map) {
+        var div = L.DomUtil.create("div", "info legend"),
+            depths = [-10, 10, 30, 50, 70, 90],
+            labelColors = ["green", "lightgreen", "yellow", "orange", "lightred", "red"];
+        
+        for (j = 0; j < depths.length; j++) {
+            div.innerHTML += 
+                '<i style="background:' + labelColors[j] + '"></i> ' 
+                + depths[j] + (depths[j + 1] ? '&ndash;' + depths[j + 1] + '<br>': '+');
+        }
+
+        return div;
+
+
+    };
+
+    legend.addTo(map);
 
 };
