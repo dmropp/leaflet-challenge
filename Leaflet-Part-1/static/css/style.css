@@ -8,3 +8,25 @@ body,
 html {
   height: 100%;
 }
+
+/* https://leafletjs.com/examples/choropleth/, referenced for how to update legend CSS */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow, referenced for how to set box shadow */
+/* https://www.w3schools.com/css/css3_borders.asp, referenced for how to set borders */
+.legend {
+  line-height: 18px;
+  color: #555;
+  background: white;
+  padding: 6px;
+  opacity: 0.85;
+  border-radius: 5px; 
+  font-weight: bold;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2); 
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 1;
+}

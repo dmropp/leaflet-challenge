@@ -19,6 +19,7 @@ function createMarkers(earthquakeData) {
         var lng = earthquakeData[i].geometry.coordinates[0];
         var lat = earthquakeData[i].geometry.coordinates[1];
         var depth = earthquakeData[i].geometry.coordinates[2];
+        var location = earthquakeData[i].properties.place;
 
         var color = "";
 
@@ -36,12 +37,12 @@ function createMarkers(earthquakeData) {
             color = "red";
         }
 
-        var earthquakeMarker = L.circle([lng, lat], {
+        var earthquakeMarker = L.circle([lng, lat], { // https://leafletjs.com/examples/quick-start/, referenced for how to create a circle marker
             color: color,
             fillColor: color,
-            opacity: 0.75,
-            radius: Math.pow(mag, 7) //may need to be an absolute value
-        }).bindPopup(`<h3>Magnitude: ${mag} Depth: ${depth} km</h3>`); 
+            fillOpacity: 0.5,
+            radius: Math.pow(mag, 7) //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow, referenced for how to calculate an exponent
+        }).bindPopup(`<h3>Location: ${location} <br> Magnitude: ${mag} <br> Depth: ${depth} km</h3>`); 
         earthquakeMarkerArray.push(earthquakeMarker);// need to add earthquake location
     }
 
@@ -74,39 +75,11 @@ function createMap(earthquakeLocations) { // Need to add legend somewhere in her
         
         for (j = 0; j < depths.length; j++) {
             div.innerHTML += 
-                '<ul style="background-color:' + labelColors[j] + '">' + depths[j] + (depths[j + 1] ? '&ndash;' + depths[j + 1] + '<br>': '+') + '</ul>'; 
-                //+ depths[j] + (depths[j + 1] ? '&ndash;' + depths[j + 1] + '<br>': '+');
-                //'<u style="background-color:' + labelColors[j] + '"></u>' + depths[j] + '<br>';
-                
-            // labels.push("<li style=\"background-color: " + labelColors[j] + "\"></li>");
-        }
-
-        // div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+                '<i style="background:' + labelColors[j] + '"></i> ' + depths[j] + (depths[j + 1] ? '&ndash;' + depths[j + 1] + '<br>': '+');         
 
         return div;
 
-
     };
-
-    // var legend = L.control({position: "bottomright"});
-    // legend.onAdd = function() {
-    //     var div = L.DomUtil.create("div", "info legend"),
-    //     depths = [-10, 10, 30, 50, 70, 90],
-    //     labelColors = ["006400", "#90EE90", "FFFF00", "FFA500", "#FF4500", "FF0000"],
-    //     labels = [];
-
-    //     for (j = 0; j < depths.length; j++) {
-    //         //labels.push("<li style=\"background-color: " + red + "\"></li>");
-    //         div.innerHTML += labels.push("<i style='background:" + labelColors[j] + "'></i> " +
-    //         (depths[j] ? depths[j] : "+"));
-    //             // '<i style="background-color:' + labelColors[j] + '"></i> ' 
-    //             // + depths[j] + (depths[j + 1] ? '&ndash;' + depths[j + 1] + '<br>': '+');
-    //             // "<ul>" + labels.join("") + "</ul>";
-    //     }
-    //     div.innerHTML = labels.join("<br>");
-
-    //     return div;
-    // }
 
     legend.addTo(map);
 
