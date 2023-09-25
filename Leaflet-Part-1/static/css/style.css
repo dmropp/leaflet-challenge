@@ -12,11 +12,12 @@ html {
 /* https://leafletjs.com/examples/choropleth/, referenced for how to update legend CSS */
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow, referenced for how to set box shadow */
 /* https://www.w3schools.com/css/css3_borders.asp, referenced for how to set borders */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/padding, referenced for how to set padding */
 .legend {
   line-height: 18px;
   color: #555;
   background: white;
-  padding: 6px;
+  padding: 0px 6px 6px 6px;
   opacity: 0.85;
   border-radius: 5px; 
   font-weight: bold;
@@ -29,4 +30,9 @@ html {
   float: left;
   margin-right: 8px;
   opacity: 1;
+}
+
+.legend h4 {
+  padding: 0px;
+  line-height: 0px;
 }

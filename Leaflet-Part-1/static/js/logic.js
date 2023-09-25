@@ -37,7 +37,7 @@ function createMarkers(earthquakeData) {
             color = "red";
         }
 
-        var earthquakeMarker = L.circle([lng, lat], { // https://leafletjs.com/examples/quick-start/, referenced for how to create a circle marker
+        var earthquakeMarker = L.circle([lat, lng], { // https://leafletjs.com/examples/quick-start/, referenced for how to create a circle marker
             color: color,
             fillColor: color,
             fillOpacity: 0.5,
@@ -72,12 +72,18 @@ function createMap(earthquakeLocations) { // Need to add legend somewhere in her
         var depths = [-10, 10, 30, 50, 70, 90];
         var labelColors = ["green", "lightgreen", "yellow", "orange", "orangered", "red"];
         var labels = [];
+
+        var legendInfo = "<h4>Earthquake Depth</h4>"; //https://www.w3schools.com/TAGS/tag_hn.asp, referenced for how to change heading tags
+
+        div.innerHTML = legendInfo;
         
         for (j = 0; j < depths.length; j++) {
             div.innerHTML += 
-                '<i style="background:' + labelColors[j] + '"></i> ' + depths[j] + (depths[j + 1] ? '&ndash;' + depths[j + 1] + '<br>': '+');         
+                '<i style="background:' + labelColors[j] + '"></i> ' + depths[j] + (depths[j + 1] ? '&ndash;' + depths[j + 1] + '<br>': '+'); 
+        }
 
         return div;
+
 
     };
 
