@@ -11,3 +11,6 @@ The purpose of this project is to map all earthquakes from the past month utiliz
 
   Data Reference - US Geological Survey
   https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+
+  Map courtesy of OpenStreetMap
+  https://www.openstreetmap.org/#map=4/38.01/-95.84
