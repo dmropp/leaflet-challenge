@@ -14,3 +14,5 @@ The purpose of this project is to map all earthquakes from the past month utiliz
 
   Map courtesy of OpenStreetMap
   https://www.openstreetmap.org/#map=4/38.01/-95.84
+
+  Note - Leaflet part 1 is complete, Leaflet part 2 is a work in progress.
